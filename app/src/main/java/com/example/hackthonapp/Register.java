@@ -24,21 +24,20 @@ import com.google.firebase.database.ValueEventListener;
 public class Register extends AppCompatActivity {
 
 
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+    DatabaseReference databaseReference= FirebaseDatabase.getInstance("https://hackthaon-default-rtdb.firebaseio.com/").getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        final EditText email=findViewById(R.id.Email);
         final EditText password=findViewById(R.id.password);
         final EditText conPassword=findViewById(R.id.conPassword);
         final EditText name=findViewById(R.id.Name);
         final EditText phone=findViewById(R.id.phone);
         final TextView Login=findViewById(R.id.LoginButton);
         final Button Register=findViewById(R.id.RegisterButton);
-            databaseReference.push().child("users").child("phone");
+        final EditText location=findViewById(R.id.location);
 
 
 
@@ -46,14 +45,14 @@ public class Register extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String emailTxt=email.getText().toString();
                 final String nameTxt=name.getText().toString();
                 final String phoneTxt=phone.getText().toString();
                 final String passwordTxt=password.getText().toString();
                 final String conPasswordTxt=conPassword.getText().toString();
+                final String address=location.getText().toString();
 
-                if(nameTxt.isEmpty()||emailTxt.isEmpty()||phoneTxt.isEmpty()||passwordTxt.isEmpty()||conPasswordTxt.isEmpty())
-                    Toast.makeText(Register.this,"One or more fields are empty!",Toast.LENGTH_SHORT).show();
+                if(nameTxt.isEmpty()||phoneTxt.isEmpty()||passwordTxt.isEmpty()||conPasswordTxt.isEmpty())
+                    Toast.makeText(Register.this,"One field or more is missing!",Toast.LENGTH_SHORT).show();
 
 
                 else if(!passwordTxt.equals(conPasswordTxt)){
@@ -65,14 +64,14 @@ public class Register extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                            if(snapshot.hasChild(emailTxt)){
-                                Toast.makeText(Register.this,"Email is already registered!",Toast.LENGTH_SHORT).show();
+                            if(snapshot.hasChild(phoneTxt)){
+                                Toast.makeText(Register.this,"Phone is already registered!",Toast.LENGTH_SHORT).show();
                             }
                             else{
 
-                                databaseReference.child("users").child(emailTxt).child("FullName").setValue(nameTxt);
-                                databaseReference.child("users").child(emailTxt).child("Phone").setValue(phoneTxt);
-                                databaseReference.child("users").child(emailTxt).child("Password").setValue(passwordTxt);
+                                databaseReference.child("users").child(phoneTxt).child("FullName").setValue(nameTxt);
+                                databaseReference.child("users").child(phoneTxt).child("Password").setValue(passwordTxt);
+                                databaseReference.child("users").child(phoneTxt).child("Address").setValue(address);
 
                                 Toast.makeText(Register.this,"Register Successful!",Toast.LENGTH_SHORT).show();
                                 finish();

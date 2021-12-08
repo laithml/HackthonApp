@@ -21,41 +21,41 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+    DatabaseReference databaseReference= FirebaseDatabase.getInstance("https://hackthaon-default-rtdb.firebaseio.com/").getReference("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        final EditText phone=findViewById(R.id.Phone);
         final EditText password=findViewById(R.id.password);
-        final EditText email=findViewById(R.id.Email);
         final Button loginBtn=findViewById(R.id.LoginButton);
         final TextView RegisterBtn=findViewById(R.id.RegisterButton);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String emailTxt=email.getText().toString();
+                final String phoneTxt=phone.getText().toString();
                 final String passTxt=password.getText().toString();
 
-                if(emailTxt.isEmpty()||passTxt.isEmpty())
-                    Toast.makeText(Login.this,"Please Enter email and password",Toast.LENGTH_SHORT).show();
+                if(phoneTxt.isEmpty()||passTxt.isEmpty())
+                    Toast.makeText(Login.this,"Please Enter phone and password",Toast.LENGTH_SHORT).show();
 
                 else {
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.hasChild("users")){
-                                if(snapshot.child("users").child(emailTxt).child("Password").getValue(String.class).equals(passTxt)) {
+                            if(snapshot.hasChild(phoneTxt)){
+                                if(snapshot.child(phoneTxt).child("Password").getValue(String.class).equals(passTxt)) {
                                     Toast.makeText(Login.this, "logged in Successfully!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this,MainActivity.class));
-                                    finish();
+
                                 }
                                 else
                                     Toast.makeText(Login.this,"Wrong Password!",Toast.LENGTH_SHORT).show();
 
                             }else
-                                Toast.makeText(Login.this,"Wrong Email!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this,"Wrong Phone Number!",Toast.LENGTH_SHORT).show();
 
 
                         }
