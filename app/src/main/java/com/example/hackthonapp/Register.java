@@ -57,7 +57,7 @@ public class Register extends AppCompatActivity {
 
 
                 else if(!passwordTxt.equals(conPasswordTxt)){
-                    Toast.makeText(Register.this,"Passwords dare not matching",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this,"Passwords are not matching",Toast.LENGTH_SHORT).show();
                 }
                 else{
 
