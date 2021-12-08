@@ -53,7 +53,7 @@ public class Register extends AppCompatActivity {
                 final String conPasswordTxt=conPassword.getText().toString();
 
                 if(nameTxt.isEmpty()||emailTxt.isEmpty()||phoneTxt.isEmpty()||passwordTxt.isEmpty()||conPasswordTxt.isEmpty())
-                    Toast.makeText(Register.this,"One field or more is Empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this,"One or more fields are empty!",Toast.LENGTH_SHORT).show();
 
 
                 else if(!passwordTxt.equals(conPasswordTxt)){
