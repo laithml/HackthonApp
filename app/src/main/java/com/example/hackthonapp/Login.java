@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReferenceFromUrl("https://hackthaon-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.hasChild("users")){
-                                if(snapshot.child(emailTxt).child("Password").getValue(String.class).equals(passTxt)) {
+                                if(snapshot.child("users").child(emailTxt).child("Password").getValue(String.class).equals(passTxt)) {
                                     Toast.makeText(Login.this, "logged in Successfully!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this,MainActivity.class));
                                     finish();

@@ -4,6 +4,7 @@ package com.example.hackthonapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Register extends AppCompatActivity {
 
 
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReferenceFromUrl("https://hackthaon-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -37,7 +38,7 @@ public class Register extends AppCompatActivity {
         final EditText phone=findViewById(R.id.phone);
         final TextView Login=findViewById(R.id.LoginButton);
         final Button Register=findViewById(R.id.RegisterButton);
-
+            databaseReference.push().child("users").child("phone");
 
 
 
@@ -69,9 +70,9 @@ public class Register extends AppCompatActivity {
                             }
                             else{
 
-                                databaseReference.child("users").child(emailTxt).child("FullName").child(nameTxt);
-                                databaseReference.child("users").child(emailTxt).child("Phone").child(phoneTxt);
-                                databaseReference.child("users").child(emailTxt).child("Password").child(passwordTxt);
+                                databaseReference.child("users").child(emailTxt).child("FullName").setValue(nameTxt);
+                                databaseReference.child("users").child(emailTxt).child("Phone").setValue(phoneTxt);
+                                databaseReference.child("users").child(emailTxt).child("Password").setValue(passwordTxt);
 
                                 Toast.makeText(Register.this,"Register Successful!",Toast.LENGTH_SHORT).show();
                                 finish();
